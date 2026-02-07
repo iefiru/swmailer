@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ event_name }} 報名確認</title>
+    <style>
+        /* Resets */
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        img {
+            border: 0;
+            outline: none;
+            text-decoration: none;
+            -ms-interpolation-mode: bicubic;
+        }
+
+        /* Client-specific fixes */
+        /* Outlook.com / Hotmail */
+        .ExternalClass {
+            width: 100%;
+        }
+
+        .ExternalClass,
+        .ExternalClass p,
+        .ExternalClass span,
+        .ExternalClass font,
+        .ExternalClass td,
+        .ExternalClass div {
+            line-height: 100%;
+        }
+
+        /* Mobile styles */
+        @media screen and (max-width: 600px) {
+            .container {
+                width: 100% !important;
+            }
+
+            .content-padding {
+                padding: 20px !important;
+            }
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f4f4f7; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.6; color: #333333;">
+    <!-- Wrapper -->
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f4f4f7; padding: 20px 0;">
+        <tr>
+            <td align="center">
+                <!-- Main Container -->
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="600" class="container" style="background-color: #ffffff; border-radius: 8px; margin: 0 auto; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden;">
+                    <!-- Header Bar (Optional Branding) -->
+                    <tr>
+                        <td style="background-color: #384259; padding: 20px; text-align: center;">
+                            <h1 style="color: #ffffff; margin: 0; font-size: 20px; font-weight: 500;">sciwork Event Confirmation</h1>
+                        </td>
+                    </tr>
+                    <!-- Body Content -->
+                    <tr>
+                        <td class="content-padding" style="padding: 40px;">
+                            <!-- Greeting -->
+                            <p style="margin: 0 0 20px 0; font-size: 16px;">
+                                Hello, <strong>{{ receiver_name }}</strong>
+                            </p>
+                            <p style="margin: 0 0 20px 0;">
+                                感謝您報名參加 sciwork 所舉辦的 <strong>{{ event_name }}</strong>。您的報名序號為
+                                <span style="background-color: #eef2f7; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: bold;">{{ id }}</span> 號。
+                            </p>
+                            <!-- Event Details Box -->
+                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f9fafb; border: 1px solid #e1e4e8; border-radius: 6px; margin-bottom: 25px;">
+                                <tr>
+                                    <td style="padding: 20px;">
+                                        <h3 style="margin: 0 0 15px 0; color: #384259; font-size: 16px; border-bottom: 1px solid #e1e4e8; padding-bottom: 8px;">活動出席須知</h3>
+                                        <p style="margin: 0 0 8px 0;">
+                                            <strong>📅 活動日期:</strong> {{ event_date }} (報到時間: 10:00-10:30)
+                                        </p>
+                                        <p style="margin: 0 0 8px 0;">
+                                            <strong>⏰ 活動時間:</strong> {{ event_time }}
+                                        </p>
+                                        <p style="margin: 0;">
+                                            <strong>📍 地點:</strong> {{ venue }}{% if venue_note is defined and venue_note %} {{ venue_note }}{% endif %}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- Important Check-in Info -->
+                            <div style="background-color: #fff8eb; border-left: 4px solid #ffa500; padding: 15px; margin-bottom: 25px;">
+                                <h4 style="margin: 0 0 10px 0; color: #b45309; font-size: 14px;">📝 報到須知</h4>
+                                <p style="margin: 0; font-size: 14px; color: #7c2d12;">
+                                    請於活動當天出示您的 <strong>KKTIX 票券 QR Code</strong>，方便工作人員進行報到。
+                                </p>
+                            </div>
+                            <!-- Agenda -->
+                            {% if agenda is defined and agenda %}
+                                <h3 style="color: #384259; font-size: 18px; margin: 0 0 15px 0;">時間表</h3>
+                                <ul style="margin: 0 0 25px 20px; padding: 0;">
+                                    {% for agenda_item in agenda %}
+                                        <li style="margin-bottom: 6px;">{{ agenda_item }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            <hr style="border: 0; border-top: 1px solid #e1e4e8; margin: 30px 0;">
+                            <!-- Pre-event Info -->
+                            <h3 style="color: #384259; font-size: 18px; margin: 0 0 15px 0;">活動前準備</h3>
+                            <p style="margin: 0 0 15px 0;">活動當天將有以下專案參與 Hacking session :</p>
+                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 20px;">
+                                <tr>
+                                    <td>
+                                        <ul style="margin: 0 0 15px 0; padding-left: 20px;">
+                                            {% for project in projects %}
+                                                <li style="margin-bottom: 6px;"><strong>{{ project }}</strong></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table>
+                            <p style="margin: 0 0 20px 0;">
+                                詳細的專案描述可於下列網址查看。您可以先進去看看有興趣的專案，並嘗試安裝。
+                            </p>
+                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 30px;">
+                                <tr>
+                                    <td align="center">
+                                        <a href="{{ event_url }}#project-list" target="_blank" rel="noopener" style="display: inline-block; padding: 12px 24px; background-color: #384259; color: #ffffff; text-decoration: none; border-radius: 4px; font-weight: bold;">
+                                            查看專案列表
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <h3 style="color: #384259; font-size: 18px; margin: 0 0 15px 0;">出發前</h3>
+                            <p style="margin: 0 0 20px 0;">
+                                會場有準備電源插座和無線網路，歡迎準備筆記型電腦或其他開發工具前來參加。
+                            </p>
+                            <!-- Venue Specific Instructions -->
+                            {% if venue == 'Happ. 小樹屋｜合歡分館' %}
+                                <div style="background-color: #f9fafb; padding: 20px; border-radius: 6px; margin-bottom: 20px;">
+                                    <h4 style="margin: 0 0 15px 0; color: #384259;">🚀 如何抵達會場</h4>
+                                    <p style="margin: 0 0 15px 0;">
+                                        小樹屋-合歡分館位於台北車站 Z 區地下街 Z2 出口日藥本舖旁邊，沿著 World Gym 廣告走連通道抵達小樹屋。
+                                    </p>
+                                    <img src="https://file.notion.so/f/f/5542a3c5-edf8-4d88-a28f-965f0ded4519/fca2c6e4-8126-4828-b72a-1ef32e2cd821/合歡地下街廁所平面圖-03.png" alt="Venue Map" style="max-width: 100%; height: auto; border-radius: 4px; border: 1px solid #e1e4e8;">
+                                </div>
+                            {% elif venue == '國立清華大學綜合三館 A 區 5 樓' %}
+                                <div style="background-color: #f9fafb; padding: 20px; border-radius: 6px; margin-bottom: 20px;">
+                                    <h4 style="margin: 0 0 15px 0; color: #384259;">🚀 如何抵達會場</h4>
+                                    <p style="margin: 0 0 15px 0;">
+                                        抵達清大正門之後，我們依照您前來的方式（駕車或是步行）提供以下前往會場的方式：
+                                    </p>
+                                    <strong style="display: block; margin-bottom: 15px; color: #4a5568;">A. 步行前往</strong>
+                                    <ol style="margin: 0 0 20px 0; padding-left: 20px;">
+                                        <li style="margin-bottom: 15px;">
+                                            <span>進入大門後，沿著紅色箭頭的方向前行</span><br>
+                                            <img src="https://i.imgur.com/E3Yw2Ql.jpg" alt="" style="max-width: 100%; height: auto; margin-top: 5px; border-radius: 4px;">
+                                        </li>
+                                        <li style="margin-bottom: 15px;">
+                                            <span>通過大草坪後的路口右轉</span><br>
+                                            <img src="https://i.imgur.com/hkhiMCR.jpg" alt="" style="max-width: 100%; height: auto; margin-top: 5px; border-radius: 4px;">
+                                        </li>
+                                        <li style="margin-bottom: 15px;">
+                                            <span>後沿著紅色箭頭的方向前行</span><br>
+                                            <img src="https://i.imgur.com/IhZqmMn.jpg" alt="" style="max-width: 100%; height: auto; margin-top: 5px; border-radius: 4px;">
+                                        </li>
+                                        <li style="margin-bottom: 15px;">
+                                            <span>到圖書館與教育館交界的十字路口左轉走入小徑</span><br>
+                                            <img src="https://i.imgur.com/9cJwVcr.jpg" alt="" style="max-width: 100%; height: auto; margin-top: 5px; border-radius: 4px;">
+                                        </li>
+                                        <li style="margin-bottom: 15px;">
+                                            <span>通過小徑會來到一個廣場，接著沿著紅色箭頭的方向前行</span><br>
+                                            <img src="https://i.imgur.com/CkTSRtd.jpg" alt="" style="max-width: 100%; height: auto; margin-top: 5px; border-radius: 4px;">
+                                        </li>
+                                        <li style="margin-bottom: 15px;">
+                                            <span>抵達國立清華大學綜合三館 A 區，進門後搭乘右手邊的電梯前往 5 樓</span><br>
+                                            <img src="https://i.imgur.com/9GxInjJ.jpg" alt="" style="max-width: 100%; height: auto; margin-top: 5px; border-radius: 4px;">
+                                        </li>
+                                    </ol>
+                                    <strong style="display: block; margin-bottom: 15px; color: #4a5568;">B. 駕車前往</strong>
+                                    <ol style="margin: 0 0 20px 0; padding-left: 20px;">
+                                        <li style="margin-bottom: 15px;">
+                                            <span>進入大門後，沿著紅色箭頭的方向前行</span><br>
+                                            <img src="https://i.imgur.com/E3Yw2Ql.jpg" alt="" style="max-width: 100%; height: auto; margin-top: 5px; border-radius: 4px;">
+                                        </li>
+                                        <li style="margin-bottom: 15px;">
+                                            <span>通過大草坪後的路口繼續前行</span><br>
+                                            <img src="https://i.imgur.com/zytTH4y.jpg" alt="" style="max-width: 100%; height: auto; margin-top: 5px; border-radius: 4px;">
+                                        </li>
+                                        <li style="margin-bottom: 15px;">
+                                            <span>通過清華名人堂後右轉</span><br>
+                                            <img src="https://i.imgur.com/MHZt9CR.jpg" alt="" style="max-width: 100%; height: auto; margin-top: 5px; border-radius: 4px;">
+                                        </li>
+                                        <li style="margin-bottom: 15px;">
+                                            <span>右轉後，車輛可停放於再左轉後之區域</span><br>
+                                            <img src="https://i.imgur.com/Q6NqdVj.jpg" alt="" style="max-width: 100%; height: auto; margin-top: 5px; border-radius: 4px;">
+                                        </li>
+                                        <li style="margin-bottom: 15px;">
+                                            <span>車輛停放完成後，會到左轉前的路口，沿著紅色磚塊地前行</span><br>
+                                            <img src="https://i.imgur.com/DfnsoO6.jpg" alt="" style="max-width: 100%; height: auto; margin-top: 5px; border-radius: 4px;">
+                                        </li>
+                                        <li style="margin-bottom: 15px;">
+                                            <span>在沿著紅色磚塊地前行的第一個路口右轉</span><br>
+                                            <img src="https://i.imgur.com/VSe66iO.jpg" alt="" style="max-width: 100%; height: auto; margin-top: 5px; border-radius: 4px;">
+                                        </li>
+                                        <li style="margin-bottom: 15px;">
+                                            <span>向前走一小段，抵達國立清華大學綜合三館 A 區</span><br>
+                                            <img src="https://i.imgur.com/Y6nxZxq.jpg" alt="" style="max-width: 100%; height: auto; margin-top: 5px; border-radius: 4px;">
+                                        </li>
+                                        <li style="margin-bottom: 15px;">
+                                            <span>進門後搭乘右手邊的電梯前往 5 樓</span><br>
+                                            <img src="https://i.imgur.com/9GxInjJ.jpg" alt="" style="max-width: 100%; height: auto; margin-top: 5px; border-radius: 4px;">
+                                        </li>
+                                    </ol>
+                                    <p style="margin: 0;">
+                                        <strong>C. 或是您也可以自行導航到達會場，Google 地圖如下：</strong><br>
+                                        <a href="https://goo.gl/maps/aBcdj2fu6gV3vjL99" target="_blank" rel="noopener" style="color: #0066cc; text-decoration: underline;">
+                                            https://goo.gl/maps/aBcdj2fu6gV3vjL99
+                                        </a>
+                                    </p>
+                                </div>
+                            {% endif %}
+                            <!-- Footer Info -->
+                            <hr style="border: 0; border-top: 1px solid #e1e4e8; margin: 30px 0;">
+                            <p style="margin: 0 0 10px 0; color: #555555;">
+                                如果對於活動有任何問題，歡迎來信或加入 <strong>sciwork discord</strong> 與我們進行討論。
+                            </p>
+                            <p style="margin: 0; color: #555555;">
+                                📧 Email: <a href="mailto:contact@sciwork.dev" style="color: #0066cc; text-decoration: none;">contact@sciwork.dev</a><br>
+                                💬 Discord: <a href="https://discord.gg/6MAkFrD" target="_blank" rel="noopener" style="color: #0066cc; text-decoration: none;">https://discord.gg/6MAkFrD</a>
+                            </p>
+                        </td>
+                    </tr>
+                    <!-- Footer Bar -->
+                    <tr>
+                        <td style="background-color: #f9fafb; padding: 20px; text-align: center; color: #888888; font-size: 12px; border-top: 1px solid #e1e4e8;">
+                            &copy; sciwork. All rights reserved.
+                        </td>
+                    </tr>
+                </table>
+                <!-- End Main Container -->
+                <div style="height: 40px; font-size: 0; line-height: 0;">&nbsp;</div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "Subject": null,
+  "From": "sender@sciwork.dev",
+  "SenderName": "sciwork",
+  "SMTP": {
+    "Host": "smtp.gmail.com",
+    "Port": 465
+  }
+}

@@ -1,0 +1,20 @@
+[project]
+name = "swmailer"
+dynamic = ["version"]
+description = "Mail toolkit for sciwork"
+readme = "README.md"
+requires-python = ">=3.9"
+maintainers = [
+  { name = "Chester Cheng", email = "hi@chester.ch" },
+]
+dependencies = [
+  "pycontw-mail-handler>=0.7.0",
+  "MarkupSafe==2.0.0"
+]
+
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/__init__.py"
