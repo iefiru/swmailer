@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.9"
 maintainers = [
   { name = "Chester Cheng", email = "hi@chester.ch" },
+  { name = "Steve Chan", email = "7875793+iefiru@users.noreply.github.com" }
 ]
 dependencies = [
   "pycontw-mail-handler>=0.7.0",
@@ -18,3 +19,42 @@ build-backend = "hatchling.build"
 
 [tool.hatch.version]
 path = "src/__init__.py"
+
+[project.scripts]
+swmail = "main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/main.py", "src/common_data.py"]
+
+[tool.ruff]
+output-format = "grouped"
+show-fixes = true
+
+[tool.ruff.lint]
+# see: https://docs.astral.sh/ruff/rules/
+select = [
+  "I",# isort (import order)
+  "N",# pep8-naming
+  "E",# pycodestyle-error
+  "W",# pycodestyle-warning
+  "F",# pyflakes
+  "PLR", # pylint-refactor
+  "PLW", # pylint-warning
+  "UP",# pyupgrade
+]
+ignore = [
+  "E501", # line-too-long
+  "PLR0912", # too-many-branches
+  "PLR0913", # too-many-arguments
+  "PLR0915", # too-many-statements
+]
+
+[tool.ruff.lint.isort]
+from-first = true
+lines-after-imports = 2
+
+[tool.ruff.format]
+docstring-code-format = true
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
