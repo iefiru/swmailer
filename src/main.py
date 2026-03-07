@@ -13,7 +13,7 @@ import os
 import re
 import subprocess
 
-from common_data import common_data_handle
+from src.common_data import parse_common_data
 
 
 CSV_REQUIRED_COLUMNS = ["Registration No.", "Contact Name", "Contact Email"]
@@ -81,7 +81,7 @@ def main():
     args = parser.parse_args()
 
     event_url = args.event_url
-    common_data = common_data_handle(event_url)
+    common_data = parse_common_data(event_url)
     unique_data = csv_to_json(args.csv_file_path)
 
     receiver_data["common_data"] = common_data

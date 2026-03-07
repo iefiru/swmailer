@@ -10,7 +10,8 @@ maintainers = [
 ]
 dependencies = [
   "pycontw-mail-handler>=0.7.0",
-  "MarkupSafe==2.0.0"
+  "MarkupSafe==2.0.0",
+  "lxml"
 ]
 
 [build-system]
@@ -24,7 +25,7 @@ path = "src/__init__.py"
 swmail = "src.main:main"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/main.py", "src/common_data.py"]
+packages = ["src"]
 
 [tool.ruff]
 output-format = "grouped"
@@ -58,3 +59,4 @@ docstring-code-format = true
 quote-style = "double"
 indent-style = "space"
 line-ending = "lf"
+
