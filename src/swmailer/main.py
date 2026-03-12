@@ -18,8 +18,10 @@ from swmailer.common_data import parse_common_data
 
 
 CSV_REQUIRED_COLUMNS = ["Registration No.", "Contact Name", "Contact Email"]
+MAIL_CONFIG_FILE = "configs/mail_config.json"
 RECEIVER_FILE = "receivers.json"
 MAIL_FILE = "mail.json"
+DEFAULT_TEMPLATE_FILE = "templates/scisprint.j2"
 PKG = files("swmailer")
 
 
@@ -39,9 +41,7 @@ def csv_to_json(csv_file_path: str) -> list[dict]:
         reader = csv.DictReader(f)
 
         # Check required columns first
-        missing = [
-            col for col in CSV_REQUIRED_COLUMNS if col not in (reader.fieldnames or [])
-        ]
+        missing = [col for col in CSV_REQUIRED_COLUMNS if col not in (reader.fieldnames or [])]
         if missing:
             raise ValueError(f"Missing required columns: {', '.join(missing)}")
 
@@ -57,9 +57,7 @@ def csv_to_json(csv_file_path: str) -> list[dict]:
 
 
 def mail_config_handle(subject: str) -> dict:
-    mail_config = json.loads(
-        PKG.joinpath("configs/mail_config.json").read_text(encoding="utf-8")
-    )
+    mail_config = json.loads(PKG.joinpath(MAIL_CONFIG_FILE).read_text(encoding="utf-8"))
     mail_config["Subject"] = subject
     return mail_config
 
@@ -68,9 +66,7 @@ def main():
     receiver_data = {"common_data": {}, "unique_data": []}
 
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "event_url", help="URL of the sciwork event to extract data from"
-    )
+    parser.add_argument("event_url", help="URL of the sciwork event to extract data from")
     parser.add_argument("csv_file_path", help="Path to the KKTIX Attendees CSV file")
     parser.add_argument("-t", "--template", help="Path to the mail template file")
     args = parser.parse_args()
@@ -87,7 +83,7 @@ def main():
     if args.template:
         template_path = Path(args.template).resolve()
     else:
-        template_path = Path(str(PKG.joinpath("templates/scisprint.j2")))
+        template_path = Path(str(PKG.joinpath(DEFAULT_TEMPLATE_FILE)))
 
     """ Create Working Directory """
     working_directory_name = sanitize_dir_name(common_data["event_name"])
