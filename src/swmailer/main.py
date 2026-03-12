@@ -5,6 +5,7 @@ Extracts Registration No., Contact Name, and Contact Email from CSV
 and outputs as JSON format.
 """
 
+from importlib.resources import files
 from pathlib import Path
 import argparse
 import csv
@@ -13,14 +14,13 @@ import os
 import re
 import subprocess
 
-from src.common_data import parse_common_data
+from swmailer.common_data import parse_common_data
 
 
 CSV_REQUIRED_COLUMNS = ["Registration No.", "Contact Name", "Contact Email"]
-MAIL_CONFIG_FILE = "configs/mail_config.json"
 RECEIVER_FILE = "receivers.json"
 MAIL_FILE = "mail.json"
-DEFAULT_TEMPLATE_FILE = "templates/scisprint.j2"
+PKG = files("swmailer")
 
 
 def sanitize_dir_name(name: str) -> str:
@@ -57,20 +57,15 @@ def csv_to_json(csv_file_path: str) -> list[dict]:
 
 
 def mail_config_handle(subject: str) -> dict:
-    mail_config = {}
-    with open(MAIL_CONFIG_FILE, encoding="utf-8") as f:
-        mail_config = json.load(f)
-
+    mail_config = json.loads(
+        PKG.joinpath("configs/mail_config.json").read_text(encoding="utf-8")
+    )
     mail_config["Subject"] = subject
-
     return mail_config
 
 
 def main():
-
     receiver_data = {"common_data": {}, "unique_data": []}
-
-    template_file_path = DEFAULT_TEMPLATE_FILE
 
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -90,7 +85,9 @@ def main():
     mail_config = mail_config_handle(common_data["event_name"] + " 活動通知信")
 
     if args.template:
-        template_file_path = args.template
+        template_path = Path(args.template).resolve()
+    else:
+        template_path = Path(str(PKG.joinpath("templates/scisprint.j2")))
 
     """ Create Working Directory """
     working_directory_name = sanitize_dir_name(common_data["event_name"])
@@ -106,7 +103,7 @@ def main():
     """ Render Mail """
     env = os.environ.copy()
     subprocess.run(
-        ["render_mail", Path("..").joinpath(template_file_path), RECEIVER_FILE],
+        ["render_mail", template_path, RECEIVER_FILE],
         cwd=Path.cwd().joinpath(working_directory_name),
         env=env,
         check=True,
