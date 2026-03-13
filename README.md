@@ -9,7 +9,7 @@ swmailer is a toolkit that helps sciwork prepare event notification emails.
 ## Install
 
 ```bash
-pip install git+https://github.com/iefiru/swmailer.git
+pip install git+https://github.com/chestercheng/swmailer.git
 ```
 
 ## Usage
